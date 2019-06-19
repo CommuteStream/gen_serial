@@ -934,8 +934,12 @@ loop(DeviceName, PortRef, Owner, Port) ->
 		{Port, {data, <<?PACKET_ERROR:8, C:32/native, M/binary>>}} ->
 		    Reason = translate_error(C, binary_to_list(M)),
 		    From ! {'$reply', self(), {error, Reason}},
-		    if From /= Owner ->
-			    Owner ! {serial_error, PortRef, Reason}
+		    case From /= Owner of
+                true ->
+                    Owner ! {serial_error, PortRef, Reason},
+                    ok;
+                _ -> 
+                    ok
 		    end
 	    after Timeout ->
 		    ok
