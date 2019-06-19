@@ -98,7 +98,7 @@ int serial_configure(struct serial_channel *_chan, struct serial_cfg *cfg)
 	bzero(&tio, sizeof(tio));
 
         tio.c_cc[VTIME] = 0;
-        tio.c_cc[VMIN] = 1;
+        tio.c_cc[VMIN] = 0;
 
         tio.c_cflag = CLOCAL | CREAD;
 
